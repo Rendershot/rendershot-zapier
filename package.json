@@ -1,0 +1,35 @@
+{
+  "name": "rendershot-zapier",
+  "version": "1.0.0",
+  "description": "Zapier app for the Rendershot screenshot & PDF generation API",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
+  "scripts": {
+    "test": "node --test --test-reporter=spec 'test/*.test.js'",
+    "zapier:validate": "zapier validate",
+    "zapier:test": "zapier test"
+  },
+  "keywords": [
+    "zapier",
+    "rendershot",
+    "screenshot",
+    "pdf"
+  ],
+  "author": "Rendershot",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rendershot/rendershot-zapier.git"
+  },
+  "dependencies": {
+    "zapier-platform-core": "18.5.0"
+  },
+  "devDependencies": {
+    "nock": "^13.5.0",
+    "zapier-platform-cli": "^18.5.0"
+  }
+}
