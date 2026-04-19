@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['20', '22']
+        # zapier-platform-core 18+ requires Node 22+. Keeping the matrix
+        # so a future 23/24 addition is a one-line change.
+        node-version: ['22']
     steps:
       - uses: actions/checkout@v4
 
