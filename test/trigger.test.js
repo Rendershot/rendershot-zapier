@@ -102,6 +102,8 @@ describe('new_render.perform', () => {
         job_type: 'screenshot',
         format: 'png',
         result_url: 'https://api.rendershot.io/v1/jobs/abc123/result',
+        file_url:
+          'https://nbg1.your-objectstorage.com/snapshoter-results/results/abc123.png?X-Amz-Signature=SIG',
         created_at: '2026-04-19T10:00:00+00:00',
         completed_at: '2026-04-19T10:00:05+00:00',
         expires_at: '2026-04-20T10:00:05+00:00',
@@ -116,7 +118,26 @@ describe('new_render.perform', () => {
       result[0].result_url,
       'https://api.rendershot.io/v1/jobs/abc123/result',
     );
+    assert.equal(
+      result[0].file_url,
+      'https://nbg1.your-objectstorage.com/snapshoter-results/results/abc123.png?X-Amz-Signature=SIG',
+    );
     assert.equal(result[0].error_message, null);
+  });
+
+  it('file_url is null when the payload omits it (e.g. job.failed)', async () => {
+    const result = await appTester(App.triggers.new_render.operation.perform, {
+      authData,
+      cleanedRequest: {
+        event: 'job.failed',
+        job_id: 'xyz',
+        status: 'failed',
+        job_type: 'screenshot',
+        format: 'png',
+        error_message: 'boom',
+      },
+    });
+    assert.equal(result[0].file_url, null);
   });
 
   it('surfaces error_message for job.failed events', async () => {
