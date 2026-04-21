@@ -111,7 +111,7 @@ const performList = async (z, bundle) => {
         format: 'png',
         result_url: 'https://api.rendershot.io/v1/jobs/abc123/result',
         file_url:
-          'https://nbg1.your-objectstorage.com/snapshoter-results/results/abc123.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLE',
+          'https://nbg1.your-objectstorage.com/snapshoter-backups/results/abc123.png?AWSAccessKeyId=EXAMPLE&Signature=EXAMPLE&Expires=1776883621',
         error_message: null,
         created_at: new Date().toISOString(),
         completed_at: new Date().toISOString(),
@@ -149,7 +149,7 @@ module.exports = {
       format: 'png',
       result_url: 'https://api.rendershot.io/v1/jobs/abc123/result',
       file_url:
-        'https://nbg1.your-objectstorage.com/snapshoter-results/results/abc123.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLE',
+        'https://nbg1.your-objectstorage.com/snapshoter-backups/results/abc123.png?AWSAccessKeyId=EXAMPLE&Signature=EXAMPLE&Expires=1776883621',
       created_at: '2026-04-19T10:00:00+00:00',
       completed_at: '2026-04-19T10:00:05+00:00',
       expires_at: '2026-04-20T10:00:05+00:00',

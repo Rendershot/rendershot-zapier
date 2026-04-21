@@ -1,6 +1,6 @@
 {
   "name": "rendershot-zapier",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Zapier app for the Rendershot screenshot & PDF generation API",
   "private": true,
   "main": "index.js",
