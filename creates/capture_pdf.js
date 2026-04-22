@@ -42,7 +42,7 @@ module.exports = {
   display: {
     label: 'Capture PDF',
     description:
-      'Render a URL as a PDF. Runs asynchronously — use the New Render trigger to act on the finished file, or follow the returned result URL.',
+      'Renders a URL to a PDF. The render runs in the background and returns a job ID immediately — pair with the New Render trigger to act on the finished file, or follow the returned result URL after the job completes.',
   },
   operation: {
     cleanInputData: false,
@@ -60,6 +60,7 @@ module.exports = {
         type: 'string',
         choices: { A4: 'A4', Letter: 'Letter', A3: 'A3', Legal: 'Legal' },
         default: 'A4',
+        helpText: 'Standard paper size for the generated PDF.',
       },
       {
         key: 'orientation',
@@ -67,12 +68,15 @@ module.exports = {
         type: 'string',
         choices: { portrait: 'Portrait', landscape: 'Landscape' },
         default: 'portrait',
+        helpText: 'Portrait is taller than wide; landscape is wider than tall.',
       },
       {
         key: 'print_background',
         label: 'Print background graphics',
         type: 'boolean',
         default: 'true',
+        helpText:
+          'Include CSS background colours and images. Off produces smaller, text-focused PDFs.',
       },
       {
         key: 'wait_for',
@@ -80,17 +84,21 @@ module.exports = {
         type: 'string',
         default: 'dom_content_loaded',
         choices: {
-          load: 'load',
-          dom_content_loaded: 'dom_content_loaded',
-          network_idle: 'network_idle',
-          commit: 'commit',
+          load: 'Page load event (safe default for static sites)',
+          dom_content_loaded: 'DOM content loaded (faster, most pages)',
+          network_idle: 'Network idle (lazy-loaded content, slower)',
+          commit: 'Navigation commit (fastest, minimal wait)',
         },
+        helpText:
+          'When to consider the page ready. For sites with lazy-loaded content try Network idle.',
       },
       {
         key: 'delay_ms',
         label: 'Extra delay (ms)',
         type: 'integer',
         default: '0',
+        helpText:
+          'Additional wait after page-ready before rendering, useful for animations. Max 10000.',
       },
       {
         key: 'ai_cleanup',

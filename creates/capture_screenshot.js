@@ -12,8 +12,6 @@
  * and PNG bytes don't travel well through the Zapier data plane anyway.
  */
 
-const WAIT_FOR_CHOICES = ['load', 'dom_content_loaded', 'network_idle', 'commit'];
-
 const perform = async (z, bundle) => {
   const input = bundle.inputData;
 
@@ -55,7 +53,7 @@ module.exports = {
   display: {
     label: 'Capture Screenshot',
     description:
-      'Take a screenshot of a URL as PNG or JPEG. Runs asynchronously — use the New Render trigger to act on the finished image, or follow the returned result URL.',
+      'Renders a URL to a PNG or JPEG screenshot. The render runs in the background and returns a job ID immediately — pair with the New Render trigger to act on the finished image, or follow the returned result URL after the job completes.',
   },
   operation: {
     cleanInputData: false,
@@ -73,6 +71,7 @@ module.exports = {
         type: 'string',
         choices: { png: 'PNG', jpeg: 'JPEG' },
         default: 'png',
+        helpText: 'PNG for sharp UI captures; JPEG for smaller files on photo-heavy pages.',
       },
       {
         key: 'full_page',
@@ -86,28 +85,36 @@ module.exports = {
         label: 'Viewport width (px)',
         type: 'integer',
         default: '1280',
+        helpText: 'Browser window width before capture. Common values: 1280, 1440, 1920.',
       },
       {
         key: 'viewport_height',
         label: 'Viewport height (px)',
         type: 'integer',
         default: '720',
+        helpText: 'Browser window height before capture. Ignored when Full page is on.',
       },
       {
         key: 'wait_for',
         label: 'Wait for',
         type: 'string',
         default: 'dom_content_loaded',
-        choices: WAIT_FOR_CHOICES.reduce((acc, v) => ({ ...acc, [v]: v }), {}),
+        choices: {
+          load: 'Page load event (safe default for static sites)',
+          dom_content_loaded: 'DOM content loaded (faster, most pages)',
+          network_idle: 'Network idle (lazy-loaded content, slower)',
+          commit: 'Navigation commit (fastest, minimal wait)',
+        },
         helpText:
-          "When to consider the page ready. For sites with lazy-loaded content try 'network_idle'.",
+          'When to consider the page ready. For sites with lazy-loaded content try Network idle.',
       },
       {
         key: 'delay_ms',
         label: 'Extra delay (ms)',
         type: 'integer',
         default: '0',
-        helpText: 'Additional wait after page-ready before capturing. Max 10000.',
+        helpText:
+          'Additional wait after page-ready before capturing, useful for animations. Max 10000.',
       },
       {
         key: 'ai_cleanup',

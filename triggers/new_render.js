@@ -130,7 +130,7 @@ module.exports = {
   display: {
     label: 'New Render',
     description:
-      'Triggers when an async screenshot or PDF finishes rendering. Includes the result URL so downstream steps can download the file.',
+      'Triggers when an async screenshot or PDF render finishes in the connected Rendershot account. Outputs the job metadata plus a 24-hour presigned File URL that downstream steps (email attachment, Dropbox upload, Slack file post) can fetch directly — no API key needed.',
   },
   operation: {
     type: 'hook',
